@@ -1,0 +1,408 @@
+/*  _______    ___________       __               __             __  
+   / ____/ |  / / ____/   |     / /_        _____/ /_____  _____/ /__
+  / __/  | | / / / __/ /| |    / __ \______/ ___/ __/ __ \/ ___/ //_/
+ / /___  | |/ / /_/ / ___ |   / /_/ /_____(__  ) /_/ /_/ / /__/ ,<   
+/_____/  |___/\____/_/  |_|  /_.___/     /____/\__/\____/\___/_/|_|  
+                                                          v0.0.3 
+Arguements: ?argument=value&argumenttwo=valuetwo&...etc
+	- load: Only accepts valid EVGA urls
+		- Loads a GPU family
+		- Used for navigation
+		- Appended to evga url
+	- search: *
+		- Preloads search field with value
+		- Still loads rest of GPU listing
+	- exact: *
+		- Only displays gpus which contain the term stored in argument
+		- Does not load other gpus
+	- ui: bool, true or false
+		- Whether or not to load navigation ui
+		- Default true
+	- plaintext: bool, true or false
+		- Whether or not to load webpage in plain text to converse bandwidth
+		- default false
+
+*/
+
+html {
+	min-height: 100%;
+	background-color: #1B5E20;
+}
+body {
+    padding-top: 50px;
+    padding-bottom: 0px;
+    background-color: #388E3C;
+    /*background-image: url('../img/bstock-bg.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-color: #66BB6A;*/
+}
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+.main-container {
+	
+}
+.navbar {
+	background-color: #2E7D32;
+}
+footer {
+  color: #eee;
+  background-color: #1B5E20;
+}
+.navbar a {
+	color: #fff;
+}
+.navbar li a:hover {
+	color: #eee;
+	background-color: #2E7D32;
+}
+.navbar li a:active {
+	color: #fff;
+	background-color: #2E7D32;
+}
+.navbar li a:focus {
+	background-color: #2E7D32;
+}
+#nav-top {
+	/*-webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 2px 3px rgba(0,0,0,0.25);
+	box-shadow: 0 2px 3px rgba(0,0,0,0.25);*/
+}
+.navbar-side {
+	background-color: #222;
+	border-right: 1px solid #000;
+}
+.navbar-side .navbar-brand {
+	background-color: #111;
+	float: none;
+	display: block;
+	height: 52px;
+	font-weight: 700;
+	border-bottom: 1px solid #000;
+}
+.navbar-side li a, .navbar-side a {
+	color: #eee;
+}
+.navbar-side li a:hover {
+	color: #ccc;
+	background-color: #151515;
+}
+.navbar-side li a:active {
+	color: #fff;
+	background-color: #111;
+}
+.navbar-side li a:focus {
+	background-color: #111;
+}
+.panel.panel-mat {
+	border: none;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 2px 3px rgba(0,0,0,0.25);
+	box-shadow: 0 2px 3px rgba(0,0,0,0.25);
+	min-height: 180px;
+}
+.panel.panel-mat:hover {
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+.panel.panel-mat .panel-body {
+	position: relative;
+	overflow: hidden;
+	min-height: 130px;
+	padding: 0 15px;
+}
+.panel-mat>.panel-heading {
+    border-radius: 2px 2px 0 0;
+    background-color: #fff;
+    border: none;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+.panel-mat .panel-heading a h3 {
+	font-weight: 400;
+}
+.panel-mat>.panel-heading a {
+	color: #222;
+}
+.panel-mat>.panel-heading a:hover {
+	color: #000;
+}
+.panel-mat>.panel-heading a:active, .panel-mat>.panel-heading a:focus {
+	color: #444;
+}
+.paragraph-end {
+    background-image: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(255,255,255,0)),color-stop(100%,rgba(255,255,255,1)));
+    background-image: -webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,1));
+    background: linear-gradient(to right,rgba(255,255,255,0),rgba(255,255,255,1));
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#00ffffff',EndColorStr='#ffffff');
+    bottom: 0;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    right: 0;
+    width: 45px;
+}
+.panel-mat ul {
+	list-style: none;
+	line-height: 1.1;
+	padding-left: 5px;
+	font-size: 10px;
+	font-weight: 700;
+	color: #444;
+	min-height: 44px;
+}
+.priceFinal {
+	font-size: 24px;
+	margin-bottom: 0;
+}
+.priceFinal sup {
+    top: -0.25em;
+}
+.gpu-img {
+    border: 0;
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    width: 90%;
+    z-index: 10;
+}
+.gpu-info-container {
+	height: 100%;
+	position: static;
+}
+.price-stock {
+	position: absolute;
+	bottom: 0;
+	right: 15px;
+}
+.panel-mat .panel-footer {
+	padding: 0px 15px 10px;
+    background-color: #fff;
+    border: none;
+}
+.panel-mat .btn {
+  border-radius: 2px;
+}
+.panel-mat .btn.btn-success {
+  border:none;
+}
+.panel-mat .btn-success {
+	background-color: #00C853;
+}
+.panel-mat .btn-success:hover, .panel-mat .btn-success:active {
+	background-color: #00AD48;
+}
+.panel-mat .btn-success:active {
+	background-color: #00943E;
+}
+
+button.navbar-toggle .icon-bar {
+	color: #fff;
+}
+
+.form-control {
+	background-color: transparent;
+	border:none;
+	border-bottom: 2px solid transparent;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	color: #fff;
+	padding-left: 0;
+	border-radius: 0;
+	outline: none !important;
+	outline-style: none !important;
+	outline-color: transparent !important;
+}
+
+.form-control:focus, .form-control:active {
+	border-bottom: 2px solid #A5D6A7;
+	outline-width: 0 !important;
+	outline: none !important;
+	outline-style: none !important;
+	outline-color: transparent !important;
+}
+
+.form-control::-webkit-input-placeholder {
+   color: rgba(255,255,255,0.4);
+}
+
+.form-control:-moz-placeholder { /* Firefox 18- */
+   color: rgba(255,255,255,0.4);  
+}
+
+.form-control::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(255,255,255,0.4);  
+}
+
+.form-control:-ms-input-placeholder {  
+   color: rgba(255,255,255,0.4);  
+}
+
+.form-control:hover::-webkit-input-placeholder {
+   color: rgba(255,255,255,0.6);
+}
+
+.form-control:hover:-moz-placeholder { /* Firefox 18- */
+   color: rgba(255,255,255,0.6);  
+}
+
+.form-control:hover::-moz-placeholder {  /* Firefox 19+ */
+   color: rgba(255,255,255,0.6);  
+}
+
+.form-control:hover:-ms-input-placeholder {  
+   color: rgba(255,255,255,0.6);  
+}
+
+.no-show {
+	width: 0 !important;
+}
+
+.navbar-toggle {
+	background-color: rgba(255,255,255,0.1);
+}
+
+@media only screen and (max-width: 767px) {
+	.gpu-img {
+		width: 90%;
+	}
+	.price-stock {
+		bottom: 15px;
+	}
+	#main {
+		width: auto !important;
+	}
+	#nav-top {
+		display: none;
+	}
+	.navbar-fixed-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+		max-height: auto;
+	}
+	.navbar-collapse.in {
+		overflow-y: scroll;
+	}
+	#nav {
+		position: fixed !important;
+	}
+
+}
+
+@media only screen and (min-width: 1201px) {
+	#nav-top {
+		z-index: 100;
+	}
+	#navbar .container {
+		position: relative;
+		left: -110px;
+	}
+	footer .container {
+		position: relative;
+		left: 110px;
+	}
+	.navbar-side .navbar-collapse {
+		height: auto;
+		border-top: 0;
+		box-shadow: none;
+		max-height: none;
+		padding-left:0;
+		padding-right:0;
+	}
+	.navbar-side .navbar-collapse.collapse {
+		display: block !important;
+		width: auto !important;
+		padding-bottom: 0;
+		overflow: visible !important;
+	}
+	.navbar-side .navbar-collapse.in {
+		overflow-x: visible;
+	}
+
+	.navbar.navbar-side {
+		max-width:220px;
+		height: 100%;
+		margin-right: 0;
+		margin-left: 0;
+	}	
+
+	nav.navbar-side .navbar-nav,
+	nav.navbar-side .navbar-nav > li,
+	nav.navbar-side .navbar-left,
+	nav.navbar-side .navbar-right,
+	nav.navbar-side .navbar-header
+	{
+		float:none !important;
+	}
+
+	.navbar-nav.navbar-side {
+		text-align: right;
+	}
+
+	.navbar-right .dropdown-menu {
+		left:0;
+		right:auto;
+	}
+	.navbar-collapse .navbar-nav.navbar-right:last-child {
+		margin-right: 0;
+	}
+	.navbar-fixed-top .navbar-collapse {
+		marginax-height: 100%;
+	}
+}
+
+@media only screen and (max-width: 1630px) {
+	#main {
+		margin: 0 0 0 auto !important;
+	}
+}
+
+@media only screen and (max-width: 1410px) {
+	#main {
+		width: 970px;
+		margin: 0 0 0 auto !important;
+	}
+	body {
+		overflow-x: hidden;
+	}
+}
+
+@media only screen and (max-width: 1200px) {
+	#nav {
+		position: static;
+	}
+
+	#nav .navbar-brand {
+		display: none;
+	}
+
+	#main {
+		margin: 0 auto !important;
+	}
+}
+
+@media only screen and (min-width: 1630px) and (max-width: 1920px) {
+  .main-container {
+	position: relative;
+	left: 110px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: #2E7D32;
+} 
+::-webkit-scrollbar-thumb {
+  background-color: #222;
+}
+::-webkit-scrollbar-button {
+  height: 0px;
+} 
+::-webkit-scrollbar-corner {
+  background-color: #2E7D32;
+}
