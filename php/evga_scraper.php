@@ -3,6 +3,7 @@
 // Load gpu type
 if (isset($_GET['load'])) {
 	$load_url = $_GET['load'];
+    $load_url = htmlspecialchars(substr($load_url, 0, 55)); // limit url to 55 characters
 	$evga_url = '&family='.$load_url;
 	$load_url = str_replace('+', "%2B", $load_url);
 } else {
@@ -12,23 +13,23 @@ if (isset($_GET['load'])) {
 
 // Loads all gpus, but default searches for value
 if (isset($_GET['search']))
-	$search_gpu = $_GET['search'];
+	$search_gpu = htmlspecialchars($_GET['search']);
 else
 	$search_gpu = '';
 
 // Only loads gpus with the exact phrase specified
 if (isset($_GET['exact']))
-	$exact_gpu = $_GET['exact'];
+	$exact_gpu = htmlspecialchars($_GET['exact']);
 else
 	$exact_gpu = '';
 
 if (isset($_GET['ui']))
-	$showui = $_GET['ui'];
+	$showui = htmlspecialchars($_GET['ui']);
 else
 	$showui = true;
 
 if (isset($_GET['plaintext']))
-	$plaintext = $_GET['plaintext'];
+	$plaintext = htmlspecialchars($_GET['plaintext']);
 else
 	$plaintext = false;
 
@@ -92,12 +93,12 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
         	$sale = '<a href="#" class="btn btn-default" disabled="disabled">OOS</a>';
         
         $product[$part] = array(
-        	'title' => $title,
-        	'img' => $imgsrc,
-        	'part' => $part,
-        	'desc' => $desc,
-        	'price' => $price,
-        	'sale' => $sale
+        	'title' => trim($title),
+        	'img' => trim($imgsrc),
+        	'part' => preg_replace('/\s+/', ' ', $part),
+        	'desc' => preg_replace('/\s+/', ' ', $desc),
+        	'price' => preg_replace('/\s+/', ' ', $price),
+        	'sale' => trim($sale)
         );
         unset($GPUlink);
         unset($imgsrc);
