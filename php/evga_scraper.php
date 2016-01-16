@@ -56,13 +56,13 @@ $base_url = '//'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 // Load gpus into array
 function getProducts(simple_html_dom $DOM, $exact_gpu) {
 	$product = array();
-	$items = $DOM->getElementById('ctl00_LFrame_prdList_pnlGridView');
+	$items = $DOM->getElementById('LFrame_prdList_pnlGridView');
 	if (empty($items)) {
 		echo '<h1 style="color:#fff;padding:64px 0;">EVGA Down for maintenance or experiencing technical difficulties</h1>';
 		return false;
 	}
-    foreach($items->find('div.gridItem') as $td) {
-        $title = $td->find('a[title=View Details]');
+    foreach($items->find('div.grid-item-outer') as $td) {
+        $title = $td->find('.pl-grid-pname');
         $title = checkSet($title);
 
         if ($exact_gpu !== '') // Only add gpu listing to the array which contain $exact_gpu
@@ -76,14 +76,14 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
         $img = checkSet($img);
         $imgsrc = $img->src;
 
-        $part = $td->find('p.partNumber');
+        $part = $td->find('p.pl-grid-pn');
         $part = checkSet($part);
         $part = str_replace('Part Number: ', '', $part);
 
-        $desc = $td->find('div.listPartDescription ul');
+        $desc = $td->find('div.pl-grid-info ul');
         $desc = checkSet($desc);
 
-        $price = $td->find('p.priceFinal');
+        $price = $td->find('p.pl-grid-price');
         $price = checkSet($price);
 
         $sale = $td->find('.btnAddCart');
@@ -108,7 +108,7 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
 
 function getNavigation(simple_html_dom $DOM) {
 	$navbar = array();
-	$navigation = $DOM->getElementById('ctl00_prdMenu_RadMenu');
+	$navigation = $DOM->getElementById('prdMenu_RadMenu');
 	if (empty($navigation))
 		return false;
 	foreach($navigation->find('li[class=rmItem rmLast] > div.rmSlide > ul.rmLevel1', 0)->children() as $navlist) {
