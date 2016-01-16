@@ -62,7 +62,7 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
 		return false;
 	}
     foreach($items->find('div.grid-item-outer') as $td) {
-        $title = $td->find('.pl-grid-pname');
+        $title = $td->find('a.pl-grid-pname');
         $title = checkSet($title);
 
         if ($exact_gpu !== '') // Only add gpu listing to the array which contain $exact_gpu
@@ -88,7 +88,7 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
 
         $sale = $td->find('.btnAddCart');
         if (isset($sale[0]))
-        	$sale = '<a href="'.$GPUlink.'" class="btn btn-success">In Stock</a>';
+        	$sale = '<a href="http://www.evga.com'.$GPUlink.'" class="btn btn-success">In Stock</a>';
         else
         	$sale = '<a href="#" class="btn btn-default" disabled="disabled">OOS</a>';
         
