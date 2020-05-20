@@ -63,7 +63,7 @@
     <div id="main" class="container">
 	<br>
 
-<?php $product = getProducts($DOM, $exact_gpu); $i = 0; if ($product !== false) : foreach ($product as $gpu) : ?><div class="gpu-listing col-lg-4 col-md-6 col-sm-6 col-xs-12"> <div class="panel panel-mat"><div class="panel-heading"> <h3 class="panel-title"><?=$gpu['title'];?></h3> <span class="paragraph-end"></span> </div> <div class="panel-body"> <div class="row"> <div class="gpu-img-container col-xs-5"> <img src="http://www.evga.com<?=$gpu['img'];?>" class="gpu-img" /> </div> <div class="gpu-info-container col-xs-7"> <?=$gpu['part'];?> <?=$gpu['desc'];?> <div class="row price-stock"> <div class="col-xs-6"> <?=$gpu['price'];?> </div> <div class="col-xs-6" style="text-align:right;"> <?=$gpu['sale'];?> </div> </div> </div> </div> </div> </div> </div><?php $i++; endforeach; endif; ?>
+<?php $product = getProducts($DOM, $exact_gpu); $i = 0; if ($product !== false) : foreach ($product as $gpu) : ?><div class="gpu-listing col-lg-4 col-md-6 col-sm-6 col-xs-12"> <div class="panel panel-mat"><div class="panel-heading"> <h3 class="panel-title"><?=$gpu['title'];?></h3> <span class="paragraph-end"></span> </div> <div class="panel-body"> <div class="row"> <div class="gpu-img-container col-xs-5"> <img src="<?=$gpu['img'];?>" class="gpu-img" /> </div> <div class="gpu-info-container col-xs-7"> <?=$gpu['part'];?> <?=$gpu['desc'];?> <div class="row price-stock"> <div class="col-xs-6"> <?=$gpu['price'];?> </div> <div class="col-xs-6" style="text-align:right;"> <?=$gpu['sale'];?> </div> </div> </div> </div> </div> </div> </div><?php $i++; endforeach; endif; ?>
 
     </div> <!-- /container --> 
 	<footer>

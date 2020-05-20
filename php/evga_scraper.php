@@ -56,13 +56,13 @@ $base_url = '//'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 // Load gpus into array
 function getProducts(simple_html_dom $DOM, $exact_gpu) {
 	$product = array();
-	$items = $DOM->getElementById('LFrame_prdList_pnlGridView');
+	$items = $DOM->getElementById('LFrame_prdList_rlvProdList_ctrl0_pnlGroupContainer');
 	if (empty($items)) {
 		echo '<h1 style="color:#fff;padding:64px 0;">EVGA Down for maintenance or experiencing technical difficulties</h1>';
 		return false;
 	}
-    foreach($items->find('div.grid-item-outer') as $td) {
-        $title = $td->find('a.pl-grid-pname');
+    foreach($items->find('div.list-item') as $td) {
+        $title = $td->find('span.pl-list-pname');
         $title = checkSet($title);
 
         if ($exact_gpu !== '') // Only add gpu listing to the array which contain $exact_gpu
@@ -76,14 +76,14 @@ function getProducts(simple_html_dom $DOM, $exact_gpu) {
         $img = checkSet($img);
         $imgsrc = $img->src;
 
-        $part = $td->find('p.pl-grid-pn');
+        $part = $td->find('p.pl-list-pn');
         $part = checkSet($part);
         $part = str_replace('Part Number: ', '', $part);
 
-        $desc = $td->find('div.pl-grid-info ul');
+        $desc = $td->find('div.pl-list-info ul');
         $desc = checkSet($desc);
 
-        $price = $td->find('p.pl-grid-price');
+        $price = $td->find('p.pl-list-price');
         $price = checkSet($price);
 
         $sale = $td->find('.btnAddCart');
