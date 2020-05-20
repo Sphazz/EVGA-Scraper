@@ -3,7 +3,7 @@
   / __/  | | / / / __/ /| |    / __ \______/ ___/ __/ __ \/ ___/ //_/
  / /___  | |/ / /_/ / ___ |   / /_/ /_____(__  ) /_/ /_/ / /__/ ,<   
 /_____/  |___/\____/_/  |_|  /_.___/     /____/\__/\____/\___/_/|_|  
-                                                          v0.0.3 
+                                                          v0.0.4 
 Arguements: ?argument=value&argumenttwo=valuetwo&...etc
 	- load: Only accepts valid EVGA urls
 		- Loads a GPU family
@@ -186,10 +186,12 @@ footer {
     border: none;
 }
 .panel-mat .btn {
-  border-radius: 2px;
+	font-size: 0.7em;
+	padding: 6px 9px;
+	border-radius: 2px;
 }
 .panel-mat .btn.btn-success {
-  border:none;
+	border:none;
 }
 .panel-mat .btn-success {
 	background-color: #00C853;
